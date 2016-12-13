@@ -76,7 +76,7 @@ text_file.write("Tempreture: %s\n" % temperatureAverage)
 
 
 
-cursor.execute(''' INSERT INTO `mySensors`(`epoch`, `temp`,`humidity`,`distance`) VALUES (%s,%s,$
+cursor.execute(''' INSERT INTO `mySensors`(`epoch`, `temp`,`humidity`,`distance`) VALUES (%s,%s,%s,%s) ''',(epoch,temperatureAverage,humidityAverage,tankReading)) 
 
 database.commit() ######### commits to database
 database.close() ####### close connection
