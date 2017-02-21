@@ -1,3 +1,0 @@
-Tank Level: 29.51
- Humidity  : 54.0
-Tempreture: 22.0

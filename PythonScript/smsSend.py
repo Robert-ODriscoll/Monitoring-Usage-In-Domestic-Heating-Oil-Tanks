@@ -6,7 +6,7 @@ from googlevoice.util import input
 voice = Voice()
 voice.login()
 
-phoneNumber = input('0838184277')
+phoneNumber = input('******')
 text = input('Message text: ')
 
 voice.send_sms(phoneNumber, text)

@@ -5,7 +5,7 @@ import Adafruit_DHT
 import MySQLdb
 import time
 
-database = MySQLdb.connect(host='localhost',user='root',passwd='root',db='Project_Database')# link to database
+database = MySQLdb.connect(host='******',user='*******',passwd='*******',db='Project_Database')# link to database
 
 
 
