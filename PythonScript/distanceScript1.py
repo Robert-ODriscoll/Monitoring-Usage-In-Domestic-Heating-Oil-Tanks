@@ -1,12 +1,20 @@
+#!/usr/bin/python
+#Author: Robert O Driscoll
+#This program has been designed to return a distance to a text file
+#and will assist me in the process of data analysis
+#Added a test to try upload distance data to mysql database running
+#on  amazon server
+#Added on 25/02/2017 -- I decided to make this my prtimary function for uplloading retrieved dated to web 
+#based data base. added temp and humidity,database table will be initialise with ID now aswwell.
+#Once completed i will begin looking into removing adafruit library and programming th DHT11 from a lower level
+#30/03/2017 added a find volume  
+
 import datetime
 import Adafruit_DHT
 import MySQLdb
 import time
 import RPi.GPIO as GPIO
-
-#def tempAvg()	
-#def distanceReading()
-#def HumidityAvg()
+import math
 
 GPIO.setmode(GPIO.BCM)
 
@@ -16,14 +24,13 @@ humidity, temperature = Adafruit_DHT.read_retry(11, 4)     ######## call adafrui
 
 GPIO.setup(triggerPin,GPIO.OUT)  ####### set triggerPin as output and echoPin as input
 GPIO.setup(echoPin,GPIO.IN)
-
-database = MySQLdb.connect(host='**********',user='****',passwd='***********',db='project')# link to database
-
+database = MySQLdb.connect(host='**********',user='****',passwd='*******',db='*********')# link to database
 cursor = database.cursor()
 
 tempList = []  ###### create a few  arrays to store tempreture/humidity/distance readings
 humidList = []
-#disList = []
+volumeList = []
+distanceList = []
 
 epoch = int(time.time()) ###### return epoch value
 
@@ -44,18 +51,32 @@ def distanceReading():
                 lastHighPulse = time.time()
 
         difference = lastHighPulse - lastLowPulse
-	
-	#humidList = [di	
-
         tempdistance = difference * 17150
+        return  tempdistance
+########### Function returning the average value from 11 humidity readings 
+def distanceAvg():
+        for ss in range(0,10):
+                distanceList = [distanceReading()]
+        newdistanceVar = sum(distanceList) / float(len(distanceList))
+        return newdistanceVar
 
-        distance = round(tempdistance, 2)
-        return distance
+tankDiameter = 31
+tankDept = 31 - distanceAvg()
+radius = tankDiameter/2
+fulltankVolume = ((3.14*tankLength)*pow(radius,2))
+
+############# Function returning the value of the tank, Prototyped on the formula for the volume of a box
+def tankVolume():
+        displacedVolume = (tankLength*(pow(radius,2)*(math.acos((radius - tankDept)/radius))-((radius - tankDept)*(math.sqrt((2*radius*tankDept)-pow(tankDept,2))))))
+
+        actualDisplacedVolume = displacedVolume/1000
+        return actualDisplacedVolume
 
 
 ########## Function returning the average value from 11 temp readings 
 def tempAvg():
-        for xx in range(0, 10):  
+        for xx in range(0, 10):
+
                 tempList = [temperature]
         newTempVar = sum(tempList) / float(len(tempList))
         return newTempVar
@@ -67,26 +88,31 @@ def HumidityAvg():
         newHumidityVar = sum(humidList) / float(len(humidList))
         return newHumidityVar
 
+########### Function returning the average value from 11 humidity readings 
+def tankVolumeAvg():
+        for jj in range(0, 10):
+                volumeList = [tankVolume()]
+        newtankVar = sum(volumeList) / float(len(volumeList))
+        return newtankVar
 
 
 
-
+tankVolume = round(tankVolumeAvg(),1)
 temperatureAverage = tempAvg()
 humidityAverage = HumidityAvg()
-tankReading = distanceReading()
+tankReading = round(distanceReading(),1)
+volumePercentage = round(((fulltankVolume/100)*tankVolume)/100,1)
 
-text_file = open("Output.txt", "w")
-text_file.write("Tank Level: %s\n " % tankReading)
-text_file.write("Humidity  : %s\n" % humidityAverage)
-text_file.write("Tempreture: %s\n" % temperatureAverage)
-
-
-cursor.execute(''' INSERT INTO `mySensors`(`epoch`, `temp`,`humidity`,`distance`) VALUES (%s,%s,%s,%s) ''',(epoch,temperatureAverage,humidityAverage,tankReading)) ###### inserts data into my database
+#############################################more database stuff
+database.insert_id()
+id = database.insert_id() #store id
+cursor.execute(''' INSERT INTO `projectdata`(`epoch`, `temp`,`humidity`,`distance`,`vol`,`percent`) VALUES (%s,%s,%s,%s,%s,%s)'''(epoch,temperatureAverage,humidityAverage,tankReading,tankVolume,volumePercentage)) ###### inserts data into my database
 
 database.commit() ######### commits to database
 database.close() ####### close connection
 
 
 GPIO.cleanup()
+
 
 
