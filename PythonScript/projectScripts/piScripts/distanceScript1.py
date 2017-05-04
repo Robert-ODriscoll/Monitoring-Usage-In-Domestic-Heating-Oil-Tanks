@@ -24,7 +24,7 @@ humidity, temperature = Adafruit_DHT.read_retry(11, 4)     ######## call adafrui
 
 GPIO.setup(triggerPin,GPIO.OUT)  ####### set triggerPin as output and echoPin as input
 GPIO.setup(echoPin,GPIO.IN)
-database = MySQLdb.connect(host='ec2-52-215-72-245.eu-west-1.compute.amazonaws.com',user='pi',passwd='Clifden@1',db='project')# link to database
+database = MySQLdb.connect(host='#####',user='#####',passwd='####',db='######')# link to database
 cursor = database.cursor()
 
 tempList = []  ###### create a few  arrays to store tempreture/humidity/distance readings

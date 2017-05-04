@@ -15,7 +15,7 @@ import urllib2     # URL functions
 import time
 import datetime
 
-database = MySQLdb.connect(host='localhost',user='root',passwd='Clifden@1',db='project') 
+database = MySQLdb.connect(host='####',user='######',passwd='#####',db='#######') 
 cursor = database.cursor()
 #########################set up database connection
 message0 = 'Everything is normal'
@@ -24,10 +24,10 @@ message2 = 'You have half a tank of oil left!'
 message3 = '5 letres left, its time for a refill'
 message4 = 'Your tank is empty!'
 
-username = 'G00209099@gmit.ie'
+username = '###'
 sender = 'oilPI'
-hash = 'f220651d4a9f134274524f41aea68d2ef56178bb197b0b36663570c03d9521fc'
-numbers = ('0838184277')
+hash = '#######'
+numbers = ('######')
 def sendSMS1():
         test_flag = 0
         values = {'test'    : test_flag,

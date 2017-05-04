@@ -11,7 +11,7 @@ from bs4 import BeautifulSoup
 ########################################################################################
 
 #######################################################################################
-database = MySQLdb.connect(host='localhost',user='root',passwd='Clifden@1',db='project') 
+database = MySQLdb.connect(host='#####',user='#####',passwd='######',db='######') 
 cursor = database.cursor()
 cursor.execute ("SELECT epoch,vol,temp FROM dailydata ORDER BY id DESC LIMIT 2")
 data = cursor.fetchall ()
