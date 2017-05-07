@@ -1,3 +1,5 @@
+#First script to test the temp/hum sensor is working and read some values to a database 
+#
 #!/usr/bin/python
 import sys
 import datetime

@@ -1,6 +1,5 @@
-#comments to be addded soon
-
-
+#Simple test script to utilise the beautiful soup library. I am reading in the entire html doc from the 
+#URL provided and saving it as an object and then using .find_all() function to parse out
 
 #!/usr/bin/env python
 import requests

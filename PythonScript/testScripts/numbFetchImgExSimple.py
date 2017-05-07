@@ -3,10 +3,8 @@
 #This program has been designed to fetch the last id number in the 
 #asssigned database. The depending on the value, send and overite an
 #image from one folder to another Via a linux command.
-#For now this can be run in a chron job and will simulate the rise and 
-#fall of the tank as the value  fetched changes.
-#initially the values will be taken from the random number database.
-#For debugging i am printing to a test doc
+#This program is an improvement on the last in the sense that i have optimised the ammount of 
+#code needed to complete the task 
 
 import os
 import MySQLdb

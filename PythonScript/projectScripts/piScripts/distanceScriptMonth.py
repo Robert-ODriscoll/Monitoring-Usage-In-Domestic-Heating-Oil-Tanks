@@ -1,13 +1,8 @@
 #!/usr/bin/python
 #Author: Robert O Driscoll
-#This program has been designed to return a distance to a text file
-#and will assist me in the process of data analysis
-#Added a test to try upload distance data to mysql database running
-#on  amazon server
-#Added on 25/02/2017 -- I decided to make this my prtimary function for uplloading retrieved dated to web 
-#based data base. added temp and humidity,database table will be initialise with ID now aswwell.
-#Once completed i will begin looking into removing adafruit library and programming th DHT11 from a lower level
-#30/03/2017 added a find volume  
+#This program is the same as the last bar the one difference is that it will run every week and upload to a different
+#weekly table in the project database. Like the last this script is run in a cronjob on sunday at 12 everyweek.
+
 
 import datetime
 import Adafruit_DHT

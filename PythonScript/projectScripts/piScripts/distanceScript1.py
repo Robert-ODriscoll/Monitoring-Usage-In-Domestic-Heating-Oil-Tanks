@@ -1,14 +1,10 @@
 #!/usr/bin/python
 #Author: Robert O Driscoll
-#This program has been designed to return a distance to a text file
-#and will assist me in the process of data analysis
-#Added a test to try upload distance data to mysql database running
-#on  amazon server
-#Added on 25/02/2017 -- I decided to make this my prtimary function for uplloading retrieved dated to web 
-#based data base. added temp and humidity,database table will be initialise with ID now aswwell.
-#Once completed i will begin looking into removing adafruit library and programming th DHT11 from a lower level
-#30/03/2017 added a find volume  
+#This program has been designed to return and id, epoch, tempreture, distance, volume, humidiy and tank percentage 
+#to the project database. The program is one of three running on cronjobs. this is the hourly script running every hour and
+#returning any changes in tank condiditons.  
 
+#include a few libraries 
 import datetime
 import Adafruit_DHT
 import MySQLdb
@@ -67,7 +63,7 @@ tankDept = 31 - distanceAvg()
 radius = tankDiameter/2
 fulltankVolume = ((3.14*tankLength)*pow(radius,2))
 
-############# Function returning the value of the tank, Prototyped on the formula for the volume of a box
+############# Function returning the value of the tank, Prototyped on the formula for the volume of a cylinder 
 def tankVolume():
         displacedVolume = (tankLength*(pow(radius,2)*(math.acos((radius - tankDept)/radius))-((radius - tankDept)*(math.sqrt((2*radius*tankDept)-pow(tankDept,2))))))
 
@@ -90,7 +86,7 @@ def HumidityAvg():
         newHumidityVar = sum(humidList) / float(len(humidList))
         return newHumidityVar
 
-########### Function returning the average value from 11 humidity readings 
+########### Function returning the average value from 11 Volume readings 
 def tankVolumeAvg():
         for jj in range(0, 10):
                 volumeList = [tankVolume()]
@@ -98,8 +94,8 @@ def tankVolumeAvg():
         return newtankVar
 
 
-
-tankVolume = round(tankVolumeAvg(),1)
+#save values into float variables and round of to 1 place of decimal using the python round function
+tankVolume = round(tankVolumeAvg(),1) 
 temperatureAverage = tempAvg()
 humidityAverage = HumidityAvg()
 tankReading = round(distanceReading(),1)
