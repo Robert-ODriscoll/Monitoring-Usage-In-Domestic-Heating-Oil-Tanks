@@ -1,3 +1,8 @@
+#Author: Robert O Driscoll
+# Test script to return all values from the 'vol' 'temp' and 'epoch' columns and returns the hash map values 
+# I then saved them to arrays and attempted to plot them to the 'graph' widget in dashing sent again using JS databind
+# Running inside a Rufus shedular. I did not take this program any further.
+
 require 'mysql2'
 
 

@@ -1,3 +1,8 @@
+
+#Author: Robert O Driscoll
+#Small database program to connect to my database on the aws ec2 linux machine, the program connects to the database
+#returns the last value entered in the humidity table. foo.mp allows you to run through the element and return a hash map value.
+#I then use .join() , .split() and .chomp() TO parse out the value and save it to a string and print it.
 require 'mysql2'
 
 # Myql connection
